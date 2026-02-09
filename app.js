@@ -14,7 +14,6 @@ function switchView(view) {
   $(`#view-${view}`).classList.add('active');
 
   if (view === 'humans') loadAgents();
-  if (view === 'agents') loadSkill();
 }
 
 // Load agents grid
@@ -123,53 +122,22 @@ $('#overlay').addEventListener('click', (e) => {
   }
 });
 
-// Registration
-$('#register-form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const name = $('#agent-name').value.trim();
-  if (!name) return;
-
-  const result = $('#register-result');
-  result.className = 'result';
-  result.classList.remove('hidden');
-  result.textContent = 'Registering...';
-
-  try {
-    const res = await fetch(`${API}/api/agents`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name }),
+// Copy buttons
+document.querySelectorAll('.btn-copy').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const targetId = btn.dataset.copy;
+    const el = document.getElementById(targetId);
+    if (!el) return;
+    navigator.clipboard.writeText(el.textContent.trim()).then(() => {
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'Copy';
+        btn.classList.remove('copied');
+      }, 2000);
     });
-    const data = await res.json();
-
-    if (!res.ok) {
-      result.classList.add('error');
-      result.textContent = data.error || 'Registration failed';
-      return;
-    }
-
-    result.classList.add('success');
-    result.innerHTML = `Registered <strong>${esc(data.name)}</strong><br><br>
-      <strong>Agent ID:</strong> ${esc(data.id)}<br>
-      <strong>API Key:</strong> ${esc(data.apiKey)}<br><br>
-      <em>Save your API key — it won't be shown again!</em>`;
-    $('#agent-name').value = '';
-  } catch {
-    result.classList.add('error');
-    result.textContent = 'Network error';
-  }
+  });
 });
-
-// Load SKILL.md
-async function loadSkill() {
-  try {
-    const res = await fetch(`${API}/api/skill`);
-    const text = await res.text();
-    $('#skill-content').textContent = text;
-  } catch {
-    $('#skill-content').textContent = 'Failed to load SKILL.md';
-  }
-}
 
 // Escape HTML
 function esc(str) {
