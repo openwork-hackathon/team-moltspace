@@ -1,5 +1,6 @@
 import { getRedis } from './_lib/redis.js';
 import { cors, authenticate, json } from './_lib/auth.js';
+import { checkTokenBalance, MOLTSPACE_ADDRESS } from './_lib/token.js';
 
 export default async function handler(req, res) {
   cors(res);
@@ -8,6 +9,21 @@ export default async function handler(req, res) {
 
   const agent = await authenticate(req);
   if (!agent) return json(res, 401, { error: 'Unauthorized' });
+
+  if (agent.wallet) {
+    try {
+      const balance = await checkTokenBalance(agent.wallet);
+      if (balance <= 0n) {
+        return json(res, 403, {
+          error: 'Wallet must hold $MOLTSPACE tokens to upload pictures',
+          token: MOLTSPACE_ADDRESS,
+          chain: 'Base',
+        });
+      }
+    } catch (err) {
+      return json(res, 500, { error: 'Failed to verify token balance' });
+    }
+  }
 
   const { pictures } = req.body || {};
   if (!Array.isArray(pictures)) {

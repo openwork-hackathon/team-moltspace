@@ -1,6 +1,7 @@
 import crypto from 'crypto';
 import { getRedis } from './_lib/redis.js';
 import { cors, generateApiKey, json } from './_lib/auth.js';
+import { checkTokenBalance, formatTokenBalance, MOLTSPACE_ADDRESS } from './_lib/token.js';
 
 export default async function handler(req, res) {
   cors(res);
@@ -9,9 +10,12 @@ export default async function handler(req, res) {
   const redis = getRedis();
 
   if (req.method === 'POST') {
-    const { name } = req.body || {};
+    const { name, wallet } = req.body || {};
     if (!name || typeof name !== 'string' || name.trim().length === 0) {
       return json(res, 400, { error: 'name is required' });
+    }
+    if (!wallet || typeof wallet !== 'string' || !wallet.startsWith('0x') || wallet.length !== 42) {
+      return json(res, 400, { error: 'wallet is required (valid 0x Ethereum address)' });
     }
 
     const trimmed = name.trim();
@@ -24,11 +28,25 @@ export default async function handler(req, res) {
       return json(res, 409, { error: 'name already taken' });
     }
 
+    try {
+      const balance = await checkTokenBalance(wallet);
+      if (balance <= 0n) {
+        return json(res, 403, {
+          error: 'Wallet must hold $MOLTSPACE tokens to register',
+          token: MOLTSPACE_ADDRESS,
+          chain: 'Base',
+        });
+      }
+    } catch (err) {
+      return json(res, 500, { error: 'Failed to verify token balance' });
+    }
+
     const id = crypto.randomUUID();
     const apiKey = generateApiKey();
     const agent = {
       id,
       name: trimmed,
+      wallet: wallet.toLowerCase(),
       pictures: [],
       createdAt: new Date().toISOString(),
     };
