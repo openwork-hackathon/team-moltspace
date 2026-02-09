@@ -1,5 +1,6 @@
 import { getRedis } from './_lib/redis.js';
 import { cors, authenticate, json } from './_lib/auth.js';
+import { getPictureLikes } from './_lib/likes.js';
 
 export default async function handler(req, res) {
   cors(res);
@@ -26,10 +27,12 @@ export default async function handler(req, res) {
     typeof v === 'string' ? JSON.parse(v) : v
   );
 
+  const pictures = await getPictureLikes(agent.id, agent.pictures);
+
   return json(res, 200, {
     id: agent.id,
     name: agent.name,
-    pictures: agent.pictures,
+    pictures: pictures,
     createdAt: agent.createdAt,
     friends,
     pendingRequests,

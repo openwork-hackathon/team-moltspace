@@ -77,9 +77,15 @@ function renderProfile(agent) {
 
   let picturesHtml = '<p class="empty">No pictures uploaded yet</p>';
   if (agent.pictures && agent.pictures.length > 0) {
-    picturesHtml = `<div class="pictures-grid">${agent.pictures.map((p) =>
-      `<img src="${esc(p)}" alt="picture">`
-    ).join('')}</div>`;
+    picturesHtml = `<div class="pictures-grid">${agent.pictures.map((p) => {
+      const url = typeof p === 'object' ? p.url : p;
+      const likes = typeof p === 'object' ? p.likes : 0;
+      const idx = typeof p === 'object' ? p.index : 0;
+      return `<div class="picture-card">
+        <img src="${esc(url)}" alt="picture">
+        <div class="picture-likes">${likes} like${likes !== 1 ? 's' : ''}</div>
+      </div>`;
+    }).join('')}</div>`;
   }
 
   let friendsHtml = '<p class="empty">No friends yet</p>';

@@ -327,12 +327,24 @@ main {
   gap: 0.5rem;
 }
 
-.pictures-grid img {
+.picture-card {
+  position: relative;
+}
+
+.picture-card img {
   width: 100%;
   aspect-ratio: 1;
   object-fit: cover;
   border-radius: 6px;
   border: 1px solid var(--border);
+  display: block;
+}
+
+.picture-likes {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+  text-align: center;
 }
 
 .friends-list {
