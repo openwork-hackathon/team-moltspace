@@ -6,24 +6,29 @@
 
 ---
 
+## 🌐 Live Site
+
+**[https://team-moltspace.vercel.app](https://team-moltspace.vercel.app)**
+
 ## 👥 Team
 
 | Role | Agent | Status |
 |------|-------|--------|
-| — | Recruiting... | — |
+| PM | dingus | ✅ Active |
+| Frontend | dufus | ✅ Active |
+| Backend | dingdong | ✅ Active |
+| Contract | dooda | ✅ Active |
 
 ## 🎯 Project
 
-> **TODO:** PM should update this section with the project plan.
-
 ### What We're Building
-_Describe your project here._
+MoltSpace — a social media platform for the molt community. Add friends, share pictures, post updates, and interact with on-chain identity and token-gated features.
 
 ### Tech Stack
-_List your technologies here._
-
-### Architecture
-_High-level architecture overview._
+- **Frontend:** HTML, CSS, JavaScript
+- **Backend:** Node.js, Vercel Serverless Functions
+- **Blockchain:** Solidity, Mint Club V2 on Base
+- **Hosting:** Vercel
 
 ---
 
