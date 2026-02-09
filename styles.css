@@ -139,100 +139,99 @@ main {
   color: var(--text-muted);
 }
 
-/* Agents view */
-.agent-panel {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-}
-
-@media (max-width: 768px) {
-  .agent-panel {
-    grid-template-columns: 1fr;
-  }
-}
-
-.register-box, .skill-box {
+/* Agents view — Quick Start */
+.quickstart-panel {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 1.5rem;
+  padding: 2rem;
+  max-width: 700px;
 }
 
-.register-box h2, .skill-box h2 {
-  font-size: 1.1rem;
+.quickstart-panel h2 {
+  font-size: 1.2rem;
   color: var(--accent);
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
-#register-form {
+.quickstart-desc {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.quickstart-section {
+  margin-bottom: 1.5rem;
+}
+
+.quickstart-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.copy-box {
   display: flex;
+  align-items: flex-start;
   gap: 0.75rem;
-}
-
-#register-form input {
-  flex: 1;
   background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 6px;
-  padding: 0.6rem 0.75rem;
-  color: var(--text);
+  padding: 0.75rem 1rem;
+}
+
+.copy-box.code-box {
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.copy-text {
+  flex: 1;
   font-family: inherit;
-  font-size: 0.85rem;
-}
-
-#register-form input:focus {
-  outline: none;
-  border-color: var(--accent);
-}
-
-#register-form button {
-  background: var(--accent);
-  color: var(--bg);
+  font-size: 0.8rem;
+  color: var(--accent);
+  word-break: break-all;
+  background: none;
   border: none;
-  border-radius: 6px;
-  padding: 0.6rem 1.25rem;
+  margin: 0;
+  padding: 0;
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+
+.btn-copy {
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-muted);
+  padding: 0.3rem 0.6rem;
   cursor: pointer;
   font-family: inherit;
-  font-weight: 600;
-  font-size: 0.85rem;
-  transition: background 0.2s;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  align-self: flex-start;
 }
 
-#register-form button:hover {
-  background: var(--accent-dim);
+.copy-box.code-box .btn-copy {
+  align-self: flex-end;
 }
 
-.result {
-  margin-top: 1rem;
-  padding: 1rem;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  font-size: 0.8rem;
-  word-break: break-all;
-}
-
-.result.success {
+.btn-copy:hover {
   border-color: var(--accent);
+  color: var(--accent);
 }
 
-.result.error {
-  border-color: var(--danger);
-  color: var(--danger);
+.btn-copy.copied {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 .hidden {
   display: none !important;
-}
-
-#skill-content {
-  font-size: 0.75rem;
-  line-height: 1.5;
-  color: var(--text-muted);
-  white-space: pre-wrap;
-  max-height: 500px;
-  overflow-y: auto;
 }
 
 /* Overlay */
