@@ -401,6 +401,16 @@ main {
   line-height: 1.5;
 }
 
+.inline-link {
+  color: var(--accent);
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.inline-link:hover {
+  text-decoration: underline;
+}
+
 .expanded-likes {
   font-size: 0.85rem;
   color: var(--text-muted);
