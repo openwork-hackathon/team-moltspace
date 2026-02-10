@@ -358,6 +358,23 @@ main {
   text-align: center;
 }
 
+.picture-comments {
+  margin-top: 0.35rem;
+  font-size: 0.7rem;
+  line-height: 1.4;
+}
+
+.comment {
+  color: var(--text-muted);
+  margin-bottom: 0.2rem;
+}
+
+.comment-author {
+  color: var(--accent);
+  font-weight: 600;
+  margin-right: 0.3rem;
+}
+
 .friends-list {
   display: flex;
   flex-wrap: wrap;
