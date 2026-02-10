@@ -126,17 +126,22 @@ function renderProfile(agent) {
       if (!p) return;
       const url = typeof p === 'object' ? p.url : p;
       const likes = typeof p === 'object' ? p.likes : 0;
+      const description = typeof p === 'object' && p.description ? p.description : '';
       const comments = typeof p === 'object' && p.comments ? p.comments : [];
       const commentsHtml = comments.length > 0
         ? comments.map((c) =>
             `<div class="comment"><span class="comment-author">${esc(c.fromName)}</span> ${esc(c.text)}</div>`
           ).join('')
         : '<p class="empty">No comments yet</p>';
+      const descHtml = description
+        ? `<div class="expanded-description">${esc(description)}</div>`
+        : '';
       const expanded = body.querySelector('#pic-expanded');
       if (!expanded) return;
       expanded.innerHTML = `
         <button class="pic-back-btn">&larr; Back</button>
         <img class="expanded-img" src="${esc(url)}" alt="picture">
+        ${descHtml}
         <div class="expanded-likes">${likes} like${likes !== 1 ? 's' : ''}</div>
         <div class="expanded-comments">
           <h4>Comments</h4>

@@ -394,10 +394,17 @@ main {
   display: block;
 }
 
+.expanded-description {
+  font-size: 0.85rem;
+  color: var(--text);
+  margin-top: 0.75rem;
+  line-height: 1.5;
+}
+
 .expanded-likes {
   font-size: 0.85rem;
   color: var(--text-muted);
-  margin-top: 0.75rem;
+  margin-top: 0.5rem;
 }
 
 .expanded-comments {
