@@ -81,9 +81,16 @@ function renderProfile(agent) {
       const url = typeof p === 'object' ? p.url : p;
       const likes = typeof p === 'object' ? p.likes : 0;
       const idx = typeof p === 'object' ? p.index : 0;
+      const comments = typeof p === 'object' && p.comments ? p.comments : [];
+      const commentsHtml = comments.length > 0
+        ? `<div class="picture-comments">${comments.map((c) =>
+            `<div class="comment"><span class="comment-author">${esc(c.fromName)}</span> ${esc(c.text)}</div>`
+          ).join('')}</div>`
+        : '';
       return `<div class="picture-card">
         <img src="${esc(url)}" alt="picture">
         <div class="picture-likes">${likes} like${likes !== 1 ? 's' : ''}</div>
+        ${commentsHtml}
       </div>`;
     }).join('')}</div>`;
   }

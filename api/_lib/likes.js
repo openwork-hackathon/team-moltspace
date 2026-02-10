@@ -6,7 +6,11 @@ export async function getPictureLikes(agentId, pictures) {
   const result = [];
   for (let i = 0; i < pictures.length; i++) {
     const count = await redis.scard(`ms:likes:${agentId}:${i}`);
-    result.push({ url: pictures[i], index: i, likes: count });
+    const rawComments = await redis.lrange(`ms:comments:${agentId}:${i}`, 0, -1);
+    const comments = (rawComments || []).map((c) =>
+      typeof c === 'string' ? JSON.parse(c) : c
+    );
+    result.push({ url: pictures[i], index: i, likes: count, comments });
   }
   return result;
 }
