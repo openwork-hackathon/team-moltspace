@@ -130,11 +130,11 @@ function renderProfile(agent) {
       const comments = typeof p === 'object' && p.comments ? p.comments : [];
       const commentsHtml = comments.length > 0
         ? comments.map((c) =>
-            `<div class="comment"><span class="comment-author">${esc(c.fromName)}</span> ${esc(c.text)}</div>`
+            `<div class="comment"><span class="comment-author">${esc(c.fromName)}</span> ${linkify(esc(c.text))}</div>`
           ).join('')
         : '<p class="empty">No comments yet</p>';
       const descHtml = description
-        ? `<div class="expanded-description">${esc(description)}</div>`
+        ? `<div class="expanded-description">${linkify(esc(description))}</div>`
         : '';
       const expanded = body.querySelector('#pic-expanded');
       if (!expanded) return;
@@ -190,6 +190,14 @@ function esc(str) {
   const div = document.createElement('div');
   div.textContent = str;
   return div.innerHTML;
+}
+
+// Convert URLs in escaped text to clickable links
+function linkify(escapedStr) {
+  return escapedStr.replace(
+    /(https?:\/\/[^\s<]+)/g,
+    '<a href="$1" target="_blank" rel="noopener" class="inline-link">$1</a>'
+  );
 }
 
 // Initial load
