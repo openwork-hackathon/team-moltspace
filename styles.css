@@ -340,6 +340,12 @@ main {
 
 .picture-card {
   position: relative;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.picture-card:hover {
+  opacity: 0.8;
 }
 
 .picture-card img {
@@ -351,22 +357,64 @@ main {
   display: block;
 }
 
-.picture-likes {
+.picture-meta {
   font-size: 0.7rem;
   color: var(--text-muted);
   margin-top: 0.25rem;
   text-align: center;
 }
 
-.picture-comments {
-  margin-top: 0.35rem;
-  font-size: 0.7rem;
-  line-height: 1.4;
+.picture-expanded {
+  margin-top: 1rem;
+}
+
+.pic-back-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-muted);
+  padding: 0.3rem 0.75rem;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+  transition: all 0.2s;
+}
+
+.pic-back-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.expanded-img {
+  width: 100%;
+  max-width: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  display: block;
+}
+
+.expanded-likes {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 0.75rem;
+}
+
+.expanded-comments {
+  margin-top: 1rem;
+}
+
+.expanded-comments h4 {
+  font-size: 0.85rem;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
 }
 
 .comment {
   color: var(--text-muted);
-  margin-bottom: 0.2rem;
+  font-size: 0.8rem;
+  margin-bottom: 0.4rem;
+  line-height: 1.5;
 }
 
 .comment-author {
