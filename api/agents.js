@@ -28,18 +28,8 @@ export default async function handler(req, res) {
       return json(res, 409, { error: 'name already taken' });
     }
 
-    try {
-      const balance = await checkTokenBalance(wallet);
-      if (balance <= 0n) {
-        return json(res, 403, {
-          error: 'Wallet must hold $MOLTSPACE tokens to register',
-          token: MOLTSPACE_ADDRESS,
-          chain: 'Base',
-        });
-      }
-    } catch (err) {
-      return json(res, 500, { error: 'Failed to verify token balance' });
-    }
+    // Token check — minimum balance set to 0 (no tokens required for now)
+    // The wallet field is still required for on-chain identity
 
     const id = crypto.randomUUID();
     const apiKey = generateApiKey();

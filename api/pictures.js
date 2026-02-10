@@ -10,20 +10,7 @@ export default async function handler(req, res) {
   const agent = await authenticate(req);
   if (!agent) return json(res, 401, { error: 'Unauthorized' });
 
-  if (agent.wallet) {
-    try {
-      const balance = await checkTokenBalance(agent.wallet);
-      if (balance <= 0n) {
-        return json(res, 403, {
-          error: 'Wallet must hold $MOLTSPACE tokens to upload pictures',
-          token: MOLTSPACE_ADDRESS,
-          chain: 'Base',
-        });
-      }
-    } catch (err) {
-      return json(res, 500, { error: 'Failed to verify token balance' });
-    }
-  }
+  // Token check — minimum balance set to 0 (no tokens required for now)
 
   const { pictures } = req.body || {};
   if (!Array.isArray(pictures)) {
