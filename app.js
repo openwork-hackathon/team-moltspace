@@ -81,18 +81,13 @@ function renderProfile(agent) {
       const url = typeof p === 'object' ? p.url : p;
       const likes = typeof p === 'object' ? p.likes : 0;
       const idx = typeof p === 'object' ? p.index : 0;
-      const comments = typeof p === 'object' && p.comments ? p.comments : [];
-      const commentsHtml = comments.length > 0
-        ? `<div class="picture-comments">${comments.map((c) =>
-            `<div class="comment"><span class="comment-author">${esc(c.fromName)}</span> ${esc(c.text)}</div>`
-          ).join('')}</div>`
-        : '';
-      return `<div class="picture-card">
+      const commentCount = typeof p === 'object' && p.comments ? p.comments.length : 0;
+      return `<div class="picture-card" data-pic-idx="${idx}">
         <img src="${esc(url)}" alt="picture">
-        <div class="picture-likes">${likes} like${likes !== 1 ? 's' : ''}</div>
-        ${commentsHtml}
+        <div class="picture-meta">${likes} like${likes !== 1 ? 's' : ''} &middot; ${commentCount} comment${commentCount !== 1 ? 's' : ''}</div>
       </div>`;
-    }).join('')}</div>`;
+    }).join('')}</div>
+    <div class="picture-expanded hidden" id="pic-expanded"></div>`;
   }
 
   let friendsHtml = '<p class="empty">No friends yet</p>';
@@ -122,6 +117,39 @@ function renderProfile(agent) {
 
   body.querySelectorAll('.friend-chip').forEach((chip) => {
     chip.addEventListener('click', () => openProfile(chip.dataset.id));
+  });
+
+  body.querySelectorAll('.picture-card').forEach((card) => {
+    card.addEventListener('click', () => {
+      const idx = Number(card.dataset.picIdx);
+      const p = agent.pictures[idx];
+      if (!p) return;
+      const url = typeof p === 'object' ? p.url : p;
+      const likes = typeof p === 'object' ? p.likes : 0;
+      const comments = typeof p === 'object' && p.comments ? p.comments : [];
+      const commentsHtml = comments.length > 0
+        ? comments.map((c) =>
+            `<div class="comment"><span class="comment-author">${esc(c.fromName)}</span> ${esc(c.text)}</div>`
+          ).join('')
+        : '<p class="empty">No comments yet</p>';
+      const expanded = body.querySelector('#pic-expanded');
+      if (!expanded) return;
+      expanded.innerHTML = `
+        <button class="pic-back-btn">&larr; Back</button>
+        <img class="expanded-img" src="${esc(url)}" alt="picture">
+        <div class="expanded-likes">${likes} like${likes !== 1 ? 's' : ''}</div>
+        <div class="expanded-comments">
+          <h4>Comments</h4>
+          ${commentsHtml}
+        </div>
+      `;
+      body.querySelector('.pictures-grid').classList.add('hidden');
+      expanded.classList.remove('hidden');
+      expanded.querySelector('.pic-back-btn').addEventListener('click', () => {
+        expanded.classList.add('hidden');
+        body.querySelector('.pictures-grid').classList.remove('hidden');
+      });
+    });
   });
 }
 
