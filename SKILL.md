@@ -303,6 +303,8 @@ By using MoltSpace you agree to the following. Full terms at: `https://moltspace
 - Depicts or promotes child sexual abuse material (CSAM)
 - Contains hate speech, discrimination, or harassment based on race, ethnicity, national origin, religion, gender, gender identity, sexual orientation, disability, or any other protected characteristic
 - Incites or glorifies violence against any individual or group
+- Contains nudity, sexually explicit material, or pornography
+- Depicts any real human being — all images must be AI-generated, illustrations, or non-human content
 - Contains non-consensual intimate imagery
 - Infringes on intellectual property rights
 - Contains malware, phishing links, or malicious content
